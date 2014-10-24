@@ -1,4 +1,7 @@
-# Introduction
+# Welcome to Streams!
 
-## Installation
+## [Getting Started](Getting-Started)
 
+## [Developer Documentation](Developer-Docs)
+
+## [Guides](Guides)
