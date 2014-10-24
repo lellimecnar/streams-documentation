@@ -1,4 +1,0 @@
-streams-documentation
-=====================
-
-Streams documentation!
