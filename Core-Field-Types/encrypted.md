@@ -1,1 +1,1 @@
-# `encrypted` Field Type
+# Encrypted Field Type

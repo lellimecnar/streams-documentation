@@ -1,1 +1,1 @@
-# `integer` Field Type
+# Integer Field Type

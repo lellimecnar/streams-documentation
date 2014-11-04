@@ -1,1 +1,1 @@
-# `boolean` Field Type
+# Boolean Field Type

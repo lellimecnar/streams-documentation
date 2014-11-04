@@ -1,1 +1,1 @@
-# `slider` Field Type
+# Slider Field Type

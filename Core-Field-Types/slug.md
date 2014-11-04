@@ -1,1 +1,1 @@
-# `slug` Field Type
+# Slug Field Type

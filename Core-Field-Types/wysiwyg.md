@@ -1,1 +1,1 @@
-# `wysiwyg` Field Type
+# WYSIWYG Field Type
