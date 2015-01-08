@@ -3,47 +3,39 @@
 The example module used in this documentation can be found [on GitHub](https://github.com/anomalylabs/example-module).
 
 ## Module Structure
-<div style="font-family:monospace;white-space:pre;display:block">
+```bash
   ┌─ resources
   │  └─ lang
   │     └─ en
-  │        ├─ [addon.php](https://github.com/anomalylabs/example-module/blob/master/resources/lang/en/addon.php)
-  │        └─ [field.php](https://github.com/anomalylabs/example-module/blob/master/resources/lang/en/field.php)
-  │  <!--│
-  │  └─ views
-  │     ├─ admin
-  │     │  └─ # HTML views for admin pages
-  │     │
-  │     └─ public
-  │        └─ # HTML views for fron-end/user-facing views
-  │-->
+  │        ├─ addon.php
+  │        └─ field.php
+  │
   ├─ src
   │  ├─ Example
-  │  │  └─ [ExampleModel.php](https://github.com/anomalylabs/example-module/blob/master/src/Example/ExampleModel.php)
-  │  │
+  │  │  └─ ExampleModel.php
   │  ├─ Http
   │  │  └─ Controller
-  │  │     └─ [ExampleController.php](https://github.com/anomalylabs/example-module/blob/master/src/Http/Controller/ExampleController.php)
+  │  │     └─ ExampleController.php
   │  │
   │  ├─ Installer
-  │  │  ├─ [ExampleFieldInstaller.php](https://github.com/anomalylabs/example-module/blob/master/src/Installer/ExampleFieldInstaller.php)
-  │  │  └─ [ExampleStreamInstaller.php](https://github.com/anomalylabs/example-module/blob/master/src/Installer/ExampleStreamInstaller.php)
+  │  │  ├─ ExampleFieldInstaller.php
+  │  │  └─ ExampleStreamInstaller.php
   │  │
   │  ├─ Ui
   │  │  ├─ Form
-  │  │  │  └─ [ExampleFormBuilder.php](https://github.com/anomalylabs/example-module/blob/master/src/Ui/Form/ExampleFormBuilder.php)
+  │  │  │  └─ ExampleFormBuilder.php
   │  │  │
   │  │  └─ Table
-  │  │     └─ [ExampleTableBuilder.php](https://github.com/anomalylabs/example-module/blob/master/src/Ui/Table/ExampleTableBuilder.php)
+  │  │     └─ ExampleTableBuilder.php
   │  │
-  │  ├─ [ExampleModule.php](https://github.com/anomalylabs/example-module/blob/master/src/ExampleModule.php)
-  │  ├─ [ExampleModuleInstaller.php](https://github.com/anomalylabs/example-module/blob/master/src/ExampleModuleInstaller.php)
-  │  └─ [ExampleModuleServiceProvider.php](https://github.com/anomalylabs/example-module/blob/master/src/ExampleModuleServiceProvider.php)
+  │  ├─ ExampleModule.php
+  │  ├─ ExampleModuleInstaller.php
+  │  └─ ExampleModuleServiceProvider.php
   │
-  ├─ [LICENSE.md](https://github.com/anomalylabs/example-module/blob/master/LICENSE.md)
-  ├─ [README.md](https://github.com/anomalylabs/example-module/blob/master/README.md)
-  └─ [composer.json](https://github.com/anomalylabs/example-module/blob/master/composer.json)
-</div>
+  ├─ LICENSE.md
+  ├─ README.md
+  └─ composer.json
+```
 
 ## Composer Package
 [./composer.json](https://github.com/anomalylabs/example-module/blob/master/composer.json)
