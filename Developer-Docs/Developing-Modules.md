@@ -1,154 +1,77 @@
 # Developing Modules
 
+The example module used in this documentation can be found [on GitHub](https://github.com/anomalylabs/example-module).
+
 ## Module Structure
-```bash
+<div style="font-family:monospace;white-space:pre;display:block">
   ┌─ resources
-  │  ├─ lang
-  │  │  └─ en
-  │  │     └─ addon.yml
-  │  │
+  │  └─ lang
+  │     └─ en
+  │        ├─ [addon.php](https://github.com/anomalylabs/example-module/blob/master/resources/lang/en/addon.php)
+  │        └─ [field.php](https://github.com/anomalylabs/example-module/blob/master/resources/lang/en/field.php)
+  │  <!--│
   │  └─ views
   │     ├─ admin
   │     │  └─ # HTML views for admin pages
   │     │
   │     └─ public
   │        └─ # HTML views for fron-end/user-facing views
-  │
+  │-->
   ├─ src
-  │  ├─ Installer
-  │  │  ├─ TodoFieldInstaller.php
-  │  │  └─ TodoStreamInstaller.php
+  │  ├─ Example
+  │  │  └─ [ExampleModel.php](https://github.com/anomalylabs/example-module/blob/master/src/Example/ExampleModel.php)
   │  │
-  │  ├─ TodoModule.php
-  │  └─ TodoModuleInstaller.php
+  │  ├─ Http
+  │  │  └─ Controller
+  │  │     └─ [ExampleController.php](https://github.com/anomalylabs/example-module/blob/master/src/Http/Controller/ExampleController.php)
+  │  │
+  │  ├─ Installer
+  │  │  ├─ [ExampleFieldInstaller.php](https://github.com/anomalylabs/example-module/blob/master/src/Installer/ExampleFieldInstaller.php)
+  │  │  └─ [ExampleStreamInstaller.php](https://github.com/anomalylabs/example-module/blob/master/src/Installer/ExampleStreamInstaller.php)
+  │  │
+  │  ├─ Ui
+  │  │  ├─ Form
+  │  │  │  └─ [ExampleFormBuilder.php](https://github.com/anomalylabs/example-module/blob/master/src/Ui/Form/ExampleFormBuilder.php)
+  │  │  │
+  │  │  └─ Table
+  │  │     └─ [ExampleTableBuilder.php](https://github.com/anomalylabs/example-module/blob/master/src/Ui/Table/ExampleTableBuilder.php)
+  │  │
+  │  ├─ [ExampleModule.php](https://github.com/anomalylabs/example-module/blob/master/src/ExampleModule.php)
+  │  ├─ [ExampleModuleInstaller.php](https://github.com/anomalylabs/example-module/blob/master/src/ExampleModuleInstaller.php)
+  │  └─ [ExampleModuleServiceProvider.php](https://github.com/anomalylabs/example-module/blob/master/src/ExampleModuleServiceProvider.php)
   │
-  ├─ vendor
-  │  └─ # Auto-generated for composer dependencies
-  │
-  └─ composer.json
-```
+  ├─ [LICENSE.md](https://github.com/anomalylabs/example-module/blob/master/LICENSE.md)
+  ├─ [README.md](https://github.com/anomalylabs/example-module/blob/master/README.md)
+  └─ [composer.json](https://github.com/anomalylabs/example-module/blob/master/composer.json)
+</div>
 
-### Using Composer in Modules
-The `composer.json` file at the root of the module directory is not required, but
-you can use it to include dependencies specific to your module. A `vendor` directory is created in the root of your module directory upon installation. Each dependency will be autoloaded into its cooresponding namespace.
+## Composer Package
+[./composer.json](https://github.com/anomalylabs/example-module/blob/master/composer.json)
+
+The `composer.json` file goes at the root of the module directory, and defines several fields which are used by the addons module:
+
+| field | type | description |
+|-------|-------------|
+| [`name`](https://getcomposer.org/doc/04-schema.md#name) | `string` | This is the name of the package, and not the name of the module. It must follow the format of: `{vendor}/{slug}-{type}`. (ie, `anomaly/example-module`) |
+| [`type`](https://getcomposer.org/doc/04-schema.md#type) | `string` | The type must be `streams-addon` |
+| [`homepage`](https://getcomposer.org/doc/04-schema.md#homepage) | `string` | Used to provide a link to the website or documentation for your module. |
+| [`authors`](https://getcomposer.org/doc/04-schema.md#authors) | `array` | A list of objects which define the author or authors of your module. |
+| [`support`](https://getcomposer.org/doc/04-schema.md#support) | `object` | An object which provides a support email address, or a link to another form of support (ie: issue tracker, forum, wiki, irc, source) |
+| [`autoload`](https://getcomposer.org/doc/04-schema.md#psr-4) | `object` | You must provide a PSR-4 autoload definition for your src directory. (ie, `"Anomaly\\ExampleModule\\": "src/"`)
+
+You can also [define dependencies](https://getcomposer.org/doc/04-schema.md#package-links) specific to your module within the `composer.json` file. When you do, a `vendor` directory is created in the root of your module directory during installation. Each dependency will be autoloaded into its cooresponding namespace.
 
 ## Module Definition
-The module definition class is really the only *required* file for a module. It extends `Anomaly\Streams\Platform\Addon\Module\Module`, and contains the information for creating admin navigation for your module. If your module requires no admin interface, this will just be an empty class file.
+[./src/ExampleModule.php](https://github.com/anomalylabs/example-module/blob/master/src/ExampleModule.php)
 
-```php
-<?php namespace Anomaly\Streams\Addon\Module\Todo;
+The module definition class extends `Anomaly\Streams\Platform\Addon\Module\Module`, and contains the information for creating admin navigation for your module. If your module requires no admin interface, this will just be an empty class file.
 
-use Anomaly\Streams\Platform\Addon\Module\Module;
+## Module Installer
+[./src/ExampleModuleInstaller.php](https://github.com/anomalylabs/example-module/blob/master/src/ExampleModuleInstaller.php)
 
-class TodoModule extends Module
-{
-    /*
-     * A translatable string representing
-     * the primary admin nav group for this module,
-     * or Null for no group.
-     */
-    protected $nav = 'nav.system';
+Your module's installer class contains a list of classes in `./src/Installer` to run, and which order to run them in. For modules requiring databse entries, these will likely include a [FieldInstaller](https://github.com/anomalylabs/example-module/blob/master/src/Installer/ExampleFieldInstaller.php) class, which will define the fields, and a [StreamInstaller](https://github.com/anomalylabs/example-module/blob/master/src/Installer/ExampleStreamInstaller.php) class, which will create the stream, and assign the fields to it.
 
-    /*
-     * The secondary navigation, specific to this module 
-     */
-    protected $sections = [
-        'todo' => [
-            'url'     => 'admin/todo',
-            'buttons' => [
-                'create' => []
-            ]
-        ]
-    ];
+## Service Provider
+[./src/ExampleModuleServiceProvider.php](https://github.com/anomalylabs/example-module/blob/master/src/ExampleModuleServiceProvider.php)
 
-    /*
-     * The dropdown under the module heading
-     * Typically for less-used actions, like settings
-     */
-    protected $menu = [
-        'settings' => [
-            'title' => trans('module.todo::addon.settings'),
-            'path'  => 'admin/todo/settings'
-        ]
-    ];
-}
-```
-
-## Module Installation
-Your module's installer class contains a list of classes in `./src/Installer` to run, and which order to run them in.
-
-```php
-<?php namespace Anomaly\Streams\Addon\Module\Todo;
-
-use Anomaly\Streams\Addon\Module\ModuleInstaller;
-
-class TodoModuleInstaller extends ModuleInstaller
-{
-    protected $installers = [
-        'TodoFieldInstaller',
-        'TodoStreamInstaller'
-    ];
-}
-```
-
-### Installing Streams
-For modules requiring databse entries, there are two installer classes for you to extend: `FieldInstaller` and `StreamInstaller`. FieldInstaller will define the fields, and StreamInstaller will create the stream, and assign the fields to it.
-
-#### Defining Fields
-```php
-<?php namespace Anomaly\Streams\Addon\Module\Todo\Installer;
-
-use Anomaly\Streams\Platform\Field\FieldInstaller;
-
-class TodoFieldInstaller extends FieldInstaller
-{
-    /*
-     * A list of fields to create.
-     *
-     * The array keys will become the field slugs,
-     * and the values are the configuration
-     * for the field type.
-     *
-     * See the documentation for each field type
-     * too see what options are available.
-     */
-    protected $fields = [
-        'title' => [
-            'type' => 'text'
-        ],
-        'description' => [
-            'type' => 'textarea'
-        ],
-        'due_date' => [
-            'type' => 'datetime'
-        ]
-    ];
-}
-```
-#### Defining Streams
-```php
-<?php namespace Anomaly\Streams\Addon\Module\Todo\Installer;
-
-use Anomaly\Streams\Platform\Stream\StreamInstaller;
-
-class TodoStreamInstaller extends StreamInstaller
-{
-    /*
-     * The configuration for your stream
-     */
-    protected $stream = [
-        'is_hidden' => true
-    ];
-
-    /*
-     * An array of fields to assign to this stream,
-     * with stream-specific configuration.
-     */
-    protected $assignments = [
-        'title' => ['is_required' => true],
-        'description' => [],
-        'due_date'
-    ];
-}
-```
-
+All addons support an optional service provider, which is used to setup or bootstrap your module. For a module, this can be used to setup routes, etc. The service provider is a class in the `src` directory of your module, with `"ServiceProvider"` appended to the name of your module definition file. (ie, `ExampleModule.php` &#10137; `ExampleModuleServiceProvider.php`)
