@@ -43,7 +43,7 @@ The example module used in this documentation can be found [on GitHub](https://g
 The `composer.json` file goes at the root of the module directory, and defines several fields which are used by the addons module:
 
 | field | type | description |
-|-------|-------------|
+|-------|------|-------------|
 | [`name`](https://getcomposer.org/doc/04-schema.md#name) | `string` | This is the name of the package, and not the name of the module. It must follow the format of: `{vendor}/{slug}-{type}`. (ie, `anomaly/example-module`) |
 | [`type`](https://getcomposer.org/doc/04-schema.md#type) | `string` | The type must be `streams-addon` |
 | [`homepage`](https://getcomposer.org/doc/04-schema.md#homepage) | `string` | Used to provide a link to the website or documentation for your module. |
